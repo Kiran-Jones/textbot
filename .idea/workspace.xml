@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d218c800-6868-4161-881a-45fc15e93ab3" name="Changes" comment="" />
+    <list default="true" id="d218c800-6868-4161-881a-45fc15e93ab3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,7 +32,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/gmail" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/sms.py" root0="FORCE_HIGHLIGHTING" />
@@ -44,7 +47,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Python.TextMessageInterface.executor": "Run",
+    "Python.TextMessageInterface.executor": "Debug",
     "Python.TextMessageSender.executor": "Run",
     "Python.main.executor": "Run",
     "Python.sms.executor": "Run",
@@ -171,7 +174,7 @@
       <workItem from="1737592113046" duration="266000" />
       <workItem from="1737592385531" duration="21000" />
       <workItem from="1737592411761" duration="364000" />
-      <workItem from="1737592782491" duration="4791000" />
+      <workItem from="1737592782491" duration="6854000" />
     </task>
     <servers />
   </component>
@@ -179,7 +182,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Textbot$TextMessageInterface.coverage" NAME="TextMessageInterface Coverage Results" MODIFIED="1737597508042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Textbot$TextMessageInterface.coverage" NAME="TextMessageInterface Coverage Results" MODIFIED="1737597673688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Textbot$sms.coverage" NAME="TextMessageSender Coverage Results" MODIFIED="1737596330659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Textbot$main.coverage" NAME="main Coverage Results" MODIFIED="1737595346833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
