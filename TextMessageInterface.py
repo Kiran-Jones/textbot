@@ -1,6 +1,8 @@
 from datetime import datetime
 import cmd
 
+from past.types import oldstr
+
 from TextMessageSender import TextMessageSender
 
 class TextMessageInterface(cmd.Cmd):
@@ -11,10 +13,16 @@ class TextMessageInterface(cmd.Cmd):
     def __init__(self, text_message_sender):
         super().__init__()
         self.sender = text_message_sender
+        self.previous_number = None
 
     def do_send(self, arg):
         try:
-            number = input("Enter phone number: ")
+            if self.previous_number:
+                number = input(f"Enter phone number (or type 'same' to use previous number {self.previous_number}): ")
+                if number.lower() == "same":
+                    number = self.previous_number
+            else:
+                number = input("Enter phone number: ")
             msg = input("Enter message: ")
 
             attachments = []
@@ -25,10 +33,13 @@ class TextMessageInterface(cmd.Cmd):
                 attachments.append(attachment)
 
             if number and msg and len(attachments) > 0:
+                print(f"Sending with number: {number} and message: {msg} and {len(attachments)} attachments")
                 self.sender.send_text_with_attachments(number, msg, attachments)
             else:
-                print(f"sending with num: {number} and message: {msg}")
+                print(f"sending with number: {number} and message: {msg}")
                 self.sender.send_text(number, msg)
+            print("Success\n")
+            self.previous_number = number
 
         except Exception as e:
             print(f"Error sending message: {str(e)}")
@@ -42,7 +53,8 @@ class TextMessageInterface(cmd.Cmd):
 
             if number and msg and send_time:
                 self.sender.schedule_text(number, msg, send_time)
-                print("success")
+                print(f"Successfully scheduled message {msg} to {number} at {send_time}\n")
+
         except Exception as e:
             print(f"Error scheduling message: {str(e)}")
 
@@ -50,14 +62,13 @@ class TextMessageInterface(cmd.Cmd):
         if not self.sender.scheduled_messages:
             print("No scheduled messages")
         else:
+            print(f"Current time: {datetime.now()}")
             for i, msg in enumerate(self.sender.scheduled_messages):
                 print(f"{i+1}. Scheduled for {msg['send_time']}")
                 print(f"To: {msg['number']}")
                 print(f"Message: {msg['message']}")
                 print(f"Scheduled at: {msg['scheduled_at']}")
                 print(f"Scheduled for: {msg['send_time']}")
-                # if msg['attachments']:
-                #     print(f"Attachments: {len(msg['attachments'])}")
 
     def do_cancel(self, arg):
         self.do_list(arg)

@@ -11,8 +11,17 @@ import threading
 
 
 class TextMessageSender:
-
     def __init__(self, from_email="dalitextbot@gmail.com", from_password="cuhp xvns fgpp btle"):
+
+        # basic argument checking
+        if not from_email or not from_password:
+            raise ValueError("Email or password not provided")
+        # currently only set up to use gmail SMTP server
+        if not from_email.endswith("@gmail.com"):
+            raise ValueError("Email must be a gmail account")
+        if from_email.count("@") != 1:
+            raise ValueError("Email must be a single email address")
+
         self.email = from_email
         self.password = from_password
         self.scheduled_messages = []
@@ -21,11 +30,11 @@ class TextMessageSender:
         self.scheduler_thread.start()
 
     def send_text(self, number, message, subject=""):
+        number = self._validate_phone_number(number)
         for carrier in PROVIDERS.keys():
             if PROVIDERS.get(carrier).get("sms") != "":
                 try:
-                    msg = self.format_mime_message(number, carrier, subject, "sms", message)
-
+                    msg = self.format_mime_single_part_message(number, carrier, subject, "sms", message)
                     self._send_message(msg)
 
                 except Exception as e:
@@ -33,11 +42,11 @@ class TextMessageSender:
                     return None
 
     def send_text_with_attachments(self, number, message, attachments=None, subject=""):
+        number = self._validate_phone_number(number)
         for carrier in PROVIDERS.keys():
             if PROVIDERS.get(carrier).get("mms_support"):
-
                 try:
-                    msg = self.format_mime_message(number, carrier, subject, "mms", message)
+                    msg = self.format_mime_multipart_message(number, carrier, subject, "mms", message)
                     if attachments:
                         for file in attachments:
                             try:
@@ -58,20 +67,30 @@ class TextMessageSender:
                     print(f"Error sending email: {str(e)}")
                     return None
 
-    def format_mime_message(self, number, carrier, subject, protocol, message):
+    def format_mime_single_part_message(self, number, carrier, subject, protocol, message):
+        to_email = self._get_emai(number, carrier, protocol)
+        msg = MIMEText(message, "plain")
+        msg['From'] = self.email
+        msg['To'] = to_email
+        msg['Subject'] = subject
+
+        return msg
+
+
+    def format_mime_multipart_message(self, number, carrier, subject, protocol, message):
+        to_email = self._get_emai(number, carrier, protocol)
         msg = MIMEMultipart()
         msg['From'] = self.email
-        to_email = f'{number}@{PROVIDERS.get(carrier).get(protocol)}'
         msg['To'] = to_email
         msg['Subject'] = subject
         msg_id = make_msgid()
         msg['Message-ID'] = msg_id
         msg['Return-Receipt-To'] = self.email
         msg['Disposition-Notification-To'] = self.email
-
         msg.attach(MIMEText(message, "plain"))
 
         return msg
+
 
     def schedule_text(self, number, message, send_time, attachments=False):
         scheduled_text = {
@@ -104,5 +123,20 @@ class TextMessageSender:
             server.login(self.email, self.password)
             server.send_message(msg)
             server.quit()
+
     def stop_scheduler(self):
         self.running = False
+
+    @staticmethod
+    def _get_emai(number, carrier, protocol):
+        return f'{number}@{PROVIDERS.get(carrier).get(protocol)}'
+
+    @staticmethod
+    def _validate_phone_number(number):
+        if number.startswith("+"):
+            number = number[1:]
+        if len(number) != 10:
+            raise ValueError("Invalid phone number")
+        return number
+
+
