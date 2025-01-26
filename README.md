@@ -16,6 +16,8 @@ numbers. The project uses Multipurpose Internet Mail Extensions (MIME) messages 
 the project comes with a basic shell complete with user instructions. 
 
 ## Screenshots
+Example text sent with an attachment
+
 <img src="attachments/hi_screenshot.jpeg" height="512" alt="hi_screenshot.png"/>
 
 
