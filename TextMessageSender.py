@@ -29,6 +29,7 @@ class TextMessageSender:
         self.scheduler_thread = threading.Thread(target=self._run_scheduler, daemon=True)
         self.scheduler_thread.start()
 
+
     def send_text(self, number, message, subject=""):
         number = self._validate_phone_number(number)
         for carrier in PROVIDERS.keys():
@@ -62,6 +63,7 @@ class TextMessageSender:
                                 print(f"Error adding attachment {file}: {str(e)}")
 
                     self._send_message(msg)
+                    print(f"send message w attachment to {msg['To']}")
 
                 except Exception as e:
                     print(f"Error sending email: {str(e)}")

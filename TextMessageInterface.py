@@ -1,7 +1,6 @@
 from datetime import datetime
 import cmd
 
-from past.types import oldstr
 
 from TextMessageSender import TextMessageSender
 
